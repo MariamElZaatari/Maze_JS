@@ -14,7 +14,7 @@ function init() {
                 for (var i = 0; i < boundaries.length; i++){
                     boundaries[i].style.backgroundColor = "red";
                 }
-                status.innerHTML="Loser"
+                status.innerHTML="You Lose"
             };
         }
     };
@@ -24,6 +24,19 @@ function init() {
         }
         status.innerHTML="<br/>";
     };
+
+    var end=document.getElementById("end");
+    end.onmouseenter = function(){
+        var boundary=document.getElementById("boundary1");
+        if(boundary.style.backgroundColor!="red"){
+            status.innerHTML="You Win";
+            for (var i = 0; i < boundaries.length; i++) {
+                boundaries[i].onmouseover = function () {
+                };
+            }
+        }
+    }
+
 };
 document.addEventListener("DOMContentLoaded", () => init());
 
