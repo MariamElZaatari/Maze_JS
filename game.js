@@ -1,88 +1,103 @@
 function init() {
-    
-    var boundaries = document.getElementsByClassName("boundary");
-    var score = 0;
-    var startGame=false;
-    var firstTry=true;
 
+    var boundaries = document.getElementsByClassName("boundary");
+    var start = document.getElementById("start");
+    var end = document.getElementById("end");
+    var status = document.getElementById("status");
+    var startGame = false;
+    var firstTry = true;
+    var score = 0;
+
+    //Score Add to Boundary Example
     document.getElementsByClassName("example")[0].style.textAlign = "center";
     document.getElementsByClassName("example")[0].innerHTML = score;
 
-    var resetBtn = document.createElement("button");
-    resetBtn.innerHTML = "reset";
-    resetBtn.onclick = function(){
-        score = 0;
-        document.getElementsByClassName("example")[0].innerHTML = score;
-        for (var i = 0; i < boundaries.length; i++){
-            boundaries[i].style.backgroundColor = "#eeeeee";
-        }
-        status.innerHTML='Begin by moving your mouse over the "S".';
-        startGame = false;
 
-        for (var i = 0; i < boundaries.length; i++) {
-            boundaries[i].onmouseover = function () {
-            };
-        }
-        firstTry = true;
-    }
-
-    document.body.append(resetBtn)
-
-    var start = document.getElementById("start");
-    var status=document.getElementById("status");
-    
+    //Start of Start Div Section
     start.onmouseenter = function () {
-        startGame=true;
-        if (firstTry){
-            status.innerHTML="<br/>";
+        startGame = true;
+        //Remove Status if first time starting the game
+        if (firstTry) {
+            status.innerHTML = "<br/>";
         }
-        firstTry=false;
+        firstTry = false;
+        //Start of Lose Section
         for (var i = 0; i < boundaries.length; i++) {
-            if(boundaries[i].classList.contains("example"))
+            //Do not add listener to Boundary Example
+            if (boundaries[i].classList.contains("example"))
                 continue
+            //Add listener on boundaries to change color to red
             boundaries[i].onmouseover = function () {
-                for (var i = 0; i < boundaries.length; i++){
-                    if(boundaries[i].classList.contains("example"))
-                    continue
+                for (var i = 0; i < boundaries.length; i++) {
+                    //Do not change color of Boundary Example
+                    if (boundaries[i].classList.contains("example"))
+                        continue
                     boundaries[i].style.backgroundColor = "red";
                 }
-                if(status.innerHTML!="You Lose"){
+                //Change score once then change status to You Lose
+                if (status.innerHTML != "You Lose") {
                     score = score - 10;
                     document.getElementsByClassName("example")[0].innerHTML = score;
                 }
-                status.innerHTML="You Lose"
-
+                status.innerHTML = "You Lose"
             };
         }
-
     };
-    start.onclick = function reset() {
-        for (var i = 0; i < boundaries.length; i++){
+    //Reset colors and status in case of play again
+    start.onclick = function playAgain() {
+        for (var i = 0; i < boundaries.length; i++) {
             boundaries[i].style.backgroundColor = "#eeeeee";
         }
-        status.innerHTML="<br/>";
+        status.innerHTML = "<br/>";
     };
+    //End of Start Div Section
 
-    var end=document.getElementById("end");
-    end.onmouseenter = function(){
-        if(!startGame)
+    //Start of End Div Section
+    end.onmouseenter = function () {
+        //Do not win if game not started
+        if (!startGame)
             return
-        var boundary=document.getElementById("boundary1");
-        if(boundary.style.backgroundColor!="red"){
-            
-            if(status.innerHTML != "You Win"){
+        //Check if boundaries are red by checking one boundary color only
+        var boundary = document.getElementById("boundary1");
+        if (boundary.style.backgroundColor != "red") {
+            //Change score once then change status to You Win
+            if (status.innerHTML != "You Win") {
                 score = score + 5;
                 document.getElementsByClassName("example")[0].innerHTML = score;
             }
-            status.innerHTML="You Win";
-
+            status.innerHTML = "You Win";
+            //Remove listeners on boundaries if endgame
             for (var i = 0; i < boundaries.length; i++) {
                 boundaries[i].onmouseover = function () {
                 };
             }
         }
     }
+    //End of End Div Section
 
+    //Start of Reset Button Section
+    //Create Reset Button, add onclick, and append button to body
+    var resetBtn = document.createElement("button");
+    resetBtn.innerHTML = "reset";
+    resetBtn.onclick = function () {
+        //reset everything to initial values
+        score = 0;
+        document.getElementsByClassName("example")[0].innerHTML = score;
+        for (var i = 0; i < boundaries.length; i++) {
+            boundaries[i].style.backgroundColor = "#eeeeee";
+        }
+        status.innerHTML = 'Begin by moving your mouse over the "S".';
+        startGame = false;
+        for (var i = 0; i < boundaries.length; i++) {
+            boundaries[i].onmouseover = function () {
+            };
+        }
+        firstTry = true;
+    }
+    document.body.append(resetBtn)
+    //End of Reset Button Section
 };
+
+//Solution for JS Link in HTML Head
 document.addEventListener("DOMContentLoaded", () => init());
 
