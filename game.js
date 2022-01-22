@@ -1,4 +1,18 @@
 function init() {
+
+    var score = 0;
+
+    document.getElementsByClassName("example")[0].style.textAlign = "center";
+    document.getElementsByClassName("example")[0].innerHTML = score;
+
+    var resetBtn = document.createElement("button");
+    resetBtn.innerHTML = "reset";
+    resetBtn.onclick = function(){
+        score = 0;
+    }
+
+    document.body.append(resetBtn)
+
     var start = document.getElementById("start");
     var boundaries = document.getElementsByClassName("boundary");
     var status=document.getElementById("status");
@@ -30,6 +44,9 @@ function init() {
         var boundary=document.getElementById("boundary1");
         if(boundary.style.backgroundColor!="red"){
             status.innerHTML="You Win";
+
+            
+
             for (var i = 0; i < boundaries.length; i++) {
                 boundaries[i].onmouseover = function () {
                 };
